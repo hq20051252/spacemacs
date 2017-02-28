@@ -15,6 +15,8 @@
         (helm-games :location local
                     :toggle (configuration-layer/package-usedp 'helm))
         pacmacs
+        gnugo
+        go
         (tetris :location built-in)
         typit
         ))
@@ -52,6 +54,24 @@
       "j" 'pacmacs-down
       "k" 'pacmacs-up
       "l" 'pacmacs-right)))
+
+(defun games/init-gnugo ()
+  (use-package gnugo
+    :defer t
+    :init
+    (push '("Gnugo" . (gnugo
+                         :quit (kill-buffer-ask (get-buffer "*Gnugo*"))
+                         :reset gnugo)) helm-games-list)
+    ))
+
+(defun games/init-go ()
+  (use-package go
+    :defer t
+    :init
+    (push '("el-go" . (go-play
+                       :quit (kill-buffer-ask (get-buffer "*Go*"))
+                       :reset go-play)) helm-games-list)
+    ))
 
 (defun games/init-tetris ()
   (use-package tetris
